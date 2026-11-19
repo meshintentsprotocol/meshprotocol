@@ -5,6 +5,7 @@ import { MeshCanvas } from '@/components/common/MeshCanvas';
 import { MeshHeader } from '@/components/common/MeshHeader';
 import { MeshFooter } from '@/components/common/MeshFooter';
 import { MeshHero } from '@/components/landing/MeshHero';
+import { LaunchEcosystem } from '@/components/landing/LaunchEcosystem';
 import { MeshStatsBar } from '@/components/landing/MeshStatsBar';
 import { MeshKeyFeatures } from '@/components/landing/MeshKeyFeatures';
 import { MeshRecyclingVisualizer } from '@/components/landing/MeshRecyclingVisualizer';
@@ -54,6 +55,7 @@ export function App() {
           {activeTab === 'landing' && (
             <>
               <MeshHero />
+              <LaunchEcosystem />
               <MeshStatsBar />
               <MeshKeyFeatures />
               <MeshRecyclingVisualizer />
