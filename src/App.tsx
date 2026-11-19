@@ -17,6 +17,7 @@ import { MeshCovenantVisualizer } from '@/components/landing/MeshCovenantVisuali
 import { MeshFAQ } from '@/components/landing/MeshFAQ';
 import { MeshDocs } from '@/components/docs/MeshDocs';
 import { MeshAppShell } from '@/components/app/MeshAppShell';
+import { LaunchShell } from '@/components/launch/LaunchShell';
 
 export function App() {
   const { activeTab, theme } = useMesh();
@@ -32,6 +33,8 @@ export function App() {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  if (window.location.pathname.startsWith('/launch')) return <LaunchShell />;
 
   return (
     <MeshAppProvider>
