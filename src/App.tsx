@@ -1,23 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { useMesh } from '@/context/MeshContext';
-import { MeshAppProvider } from '@/context/MeshAppContext';
-import { MeshCanvas } from '@/components/common/MeshCanvas';
-import { MeshHeader } from '@/components/common/MeshHeader';
-import { MeshFooter } from '@/components/common/MeshFooter';
-import { MeshHero } from '@/components/landing/MeshHero';
-import { LaunchEcosystem } from '@/components/landing/LaunchEcosystem';
-import { MeshStatsBar } from '@/components/landing/MeshStatsBar';
-import { MeshKeyFeatures } from '@/components/landing/MeshKeyFeatures';
-import { MeshRecyclingVisualizer } from '@/components/landing/MeshRecyclingVisualizer';
-import { MeshStrategyTemplatesSection } from '@/components/landing/MeshStrategyTemplatesSection';
-import { MeshTriRouteSection } from '@/components/landing/MeshTriRouteSection';
-import { MeshYieldSimulator } from '@/components/landing/MeshYieldSimulator';
-import { MeshArchitectureBento } from '@/components/landing/MeshArchitectureBento';
-import { MeshCovenantVisualizer } from '@/components/landing/MeshCovenantVisualizer';
-import { MeshFAQ } from '@/components/landing/MeshFAQ';
-import { MeshDocs } from '@/components/docs/MeshDocs';
-import { MeshAppShell } from '@/components/app/MeshAppShell';
-import { LaunchShell } from '@/components/launch/LaunchShell';
+import React, { useEffect, useState } from "react";
+import { useMesh } from "@/context/MeshContext";
+import { MeshAppProvider } from "@/context/MeshAppContext";
+import { MeshCanvas } from "@/components/common/MeshCanvas";
+import { MeshHeader } from "@/components/common/MeshHeader";
+import { MeshFooter } from "@/components/common/MeshFooter";
+import { MeshHero } from "@/components/landing/MeshHero";
+import { LaunchEcosystem } from "@/components/landing/LaunchEcosystem";
+import { MeshStatsBar } from "@/components/landing/MeshStatsBar";
+import { MeshKeyFeatures } from "@/components/landing/MeshKeyFeatures";
+import { MeshRecyclingVisualizer } from "@/components/landing/MeshRecyclingVisualizer";
+import { MeshStrategyTemplatesSection } from "@/components/landing/MeshStrategyTemplatesSection";
+import { MeshTriRouteSection } from "@/components/landing/MeshTriRouteSection";
+import { MeshYieldSimulator } from "@/components/landing/MeshYieldSimulator";
+import { MeshArchitectureBento } from "@/components/landing/MeshArchitectureBento";
+import { MeshCovenantVisualizer } from "@/components/landing/MeshCovenantVisualizer";
+import { MeshFAQ } from "@/components/landing/MeshFAQ";
+import { MeshDocs } from "@/components/docs/MeshDocs";
+import { MeshAppShell } from "@/components/app/MeshAppShell";
+
+const LaunchShell = React.lazy(() =>
+  import("@/components/launch/LaunchShell").then((module) => ({
+    default: module.LaunchShell,
+  })),
+);
 
 export function App() {
   const { activeTab, theme } = useMesh();
@@ -30,15 +35,30 @@ export function App() {
       const scrollHeight = el.scrollHeight - el.clientHeight;
       setScrollProgress(scrollHeight > 0 ? scrollTop / scrollHeight : 0);
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  if (window.location.pathname.startsWith('/launch')) return <LaunchShell />;
+  if (
+    ["/launch", "/lock", "/verify", "/tokens/"].some(
+      (prefix) =>
+        window.location.pathname === prefix ||
+        window.location.pathname.startsWith(
+          prefix === "/launch" ? "/launch/" : prefix,
+        ),
+    )
+  )
+    return (
+      <React.Suspense fallback={<div className="min-h-screen bg-[#09090b]" />}>
+        <LaunchShell />
+      </React.Suspense>
+    );
 
   return (
     <MeshAppProvider>
-      <div className={`min-h-screen flex flex-col transition-colors duration-200 relative ${theme === 'dark' ? 'bg-[#09090b] text-[#fafafa]' : 'bg-[#f9f9fb] text-[#09090b]'}`}>
+      <div
+        className={`min-h-screen flex flex-col transition-colors duration-200 relative ${theme === "dark" ? "bg-[#09090b] text-[#fafafa]" : "bg-[#f9f9fb] text-[#09090b]"}`}
+      >
         {/* Top Scroll Indicator */}
         <div className="fixed top-0 left-0 right-0 h-[2px] z-[100] bg-transparent pointer-events-none">
           <div
@@ -55,7 +75,7 @@ export function App() {
 
         {/* Main Body */}
         <main className="flex-1 relative z-10">
-          {activeTab === 'landing' && (
+          {activeTab === "landing" && (
             <>
               <MeshHero />
               <LaunchEcosystem />
@@ -70,8 +90,8 @@ export function App() {
               <MeshFAQ />
             </>
           )}
-          {activeTab === 'docs' && <MeshDocs />}
-          {activeTab === 'app' && <MeshAppShell />}
+          {activeTab === "docs" && <MeshDocs />}
+          {activeTab === "app" && <MeshAppShell />}
         </main>
 
         {/* Wireframe Brutalist Footer */}
