@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, ShieldCheck, RefreshCw, Layers, Coins, Zap } from 'lucide-react';
 
 export function MeshHero() {
-  const { language, t, setActiveTab } = useMesh();
+  const { language, t } = useMesh();
   const [activeTabMode, setActiveTabMode] = useState<'recycle' | 'multislot' | 'batch'>('recycle');
   const [bchInput, setBchInput] = useState(10);
 
@@ -44,10 +44,10 @@ export function MeshHero() {
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
               <button
-                onClick={() => { setActiveTab('app'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                onClick={() => { window.location.href = 'https://champrotocol.vercel.app/mesh/new'; }}
                 className="px-6 py-3.5 rounded-xl bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 font-medium text-sm hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer"
               >
-                <span>{isZh ? '进入做市终端' : 'Launch Mesh Terminal'}</span>
+                <span>{isZh ? '创建 Mesh 流动性池' : 'Create a Mesh Pool'}</span>
                 <ArrowUpRight className="w-4 h-4" />
               </button>
 
